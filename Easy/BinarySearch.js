@@ -36,7 +36,7 @@ let binaryNumFinder = function (arr, x, start, end) {
   if (start > end) return -1;
 
   // Compute the middle index.
-  let middle = Math.round((start + end) / 2);
+  let middle = Math.round(start + (end - start) / 2);
 
   // Compare the middle element with number x. If equal return true.
   if (arr[middle] === x) return middle;
