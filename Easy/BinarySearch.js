@@ -24,3 +24,33 @@ Explanation: 2 does not exist in nums so return -1
 // while nums has no more numbers
 // if target is found return it
 // else return -1
+
+
+
+
+
+
+
+let binaryNumFinder = function (arr, x, start, end) {
+  // If starting index is greater than ending index return false.
+  if (start > end) return -1;
+
+  // Compute the middle index.
+  let middle = Math.round((start + end) / 2);
+
+  // Compare the middle element with number x. If equal return true.
+  if (arr[middle] === x) return middle;
+
+  // If greater, call the same function with ending index = middle-1 and repeat step 1.
+  if (arr[middle] > x) return binaryNumFinder(arr, x, start, middle - 1);
+
+  // If smaller, call the same function with starting index = middle+1 and repeat step 1.
+  if (arr[middle] < x) return binaryNumFinder(arr, x, middle + 1, end);
+}
+
+var search = function(nums, target) {
+    binaryNumFinder(nums, target, 0, nums.length - 1);
+};
+
+search([-1,0,3,5,9,12], 9);
+search([-1,0,3,5,9,12], 2);
