@@ -23,55 +23,112 @@ Constraints:
 text consists of lowercase English letters and ' '.
 text contains at least one word
 
-Pseudo:
-find number of spaces
-find number of words
-space / (words - 1) = space_between_words  ---- Math.trunc()
-is there a remainder = space % (words-1)
-*/
 
-let a = ['hello']
-a.reduce((prev, curr, index, arr) => {
-  console.log("prev", prev)
-  console.log("curr", curr)
-  console.log("index", index)
-  console.log("arr", arr)
-}, a[0])
+////////////////////////////////////////////////
+// FINAL
+////////////////////////////////////////////////
+/**
+ * @param {string} text
+ * @return {string}
+ */
+ var reorderSpaces = function(text) {
+  let regex = /\s+|(\w+)/g
+  const resultsArr = [...text.matchAll(regex)]
 
-let regex = /\s+|(\w+)/g
-let text = "hello   world"
-// let text = "  jhbqunnzo "
-const resultsArr = [...text.matchAll(regex)]
+  let spaces = 0;
+  const words = resultsArr
+    .map(line => line[0])
+    .filter(entry => {
+      entry.startsWith(' ') ? spaces += (entry.length) : spaces
+      return !entry.startsWith(' ')
+    });
 
-let spaces = 0;
+  let wordsCount = words.length > 1 ? words.length - 1 : words.length
+  const finalString = words.reduce((prev, curr, index, arr) => {
+    if (index == 0) return (`${curr}${' '.repeat(spaces / wordsCount)}`)
+    else if (index === arr.length - 1) return `${prev + curr}${spaces % wordsCount ? ' '.repeat(spaces % wordsCount): ''}`
+    else return `${prev + curr}${' '.repeat(spaces / wordsCount)}`
+  }, prev = words[0])
 
-// Edge case where only one word
-if (resultsArr.length => 2 and resultsArr.length <= 3) {
-  const res = resultsArr
-  .map(line => line[0])
-  .filter(entry => {
-    entry.startsWith(' ') ? spaces += (entry.length) : spaces
-    return !entry.startsWith(' ')
-  })
-}
+  return finalString
+};
+
+// let a = ['hello']
+// a.reduce((prev, curr, index, arr) => {
+//   console.log("prev", prev)
+//   console.log("curr", curr)
+//   console.log("index", index)
+//   console.log("arr", arr)
+// }, a[0])
+
+// let regex = /\s+|(\w+)/g
+// // let text = "hello   world"
+// // let text = "  jhbqunnzo "
+// // let text = "  this   is  a sentence "
+// const resultsArr = [...text.matchAll(regex)]
+
+// let spaces = 0;
+// // Edge case where only one word
+// const words = resultsArr
+//   .map(line => line[0])
+//   .filter(entry => {
+//     entry.startsWith(' ') ? spaces += (entry.length) : spaces
+//     return !entry.startsWith(' ')
+//   });
+
+//   // console.log('spaces', spaces)
+// let wordsCount = words.length > 1 ? words.length - 1 : words.length
+// const finalString = words.reduce((prev, curr, index, arr) => {
+//   // console.log(`index: ${index}, index === arr.length - 1: ${index === arr.length - 1}, prev: ${prev} , curr: ${curr}`)
+//   // initially newString will be the 1st el in array
+//   // for the 1st element add space to the right
+//   if (index == 0) {
+//     // this shoudl take care of edge cases where reduce returns 1st
+//     return (`${curr}${' '.repeat(spaces / wordsCount)}`)
+//   } else if (index === arr.length - 1) {
+//     // this will be the last index and it should add a space to edn if neede
+//     const remainderSpaces = spaces % wordsCount
+//     // console.log("new string", newstring)
+//     return `${prev + curr}${remainderSpaces ? ' '.repeat(remainderSpaces): ''}`;
+//   }
+//   else {
+//     return `${prev + curr}${' '.repeat(spaces / wordsCount)}`
+//   }
+// }, prev = words[0])
+
+// return finalString
 
 
-const res = resultsArr
-  .map(line => line[0])
-  .filter(entry => {
-    entry.startsWith(' ') ? spaces += (entry.length) : spaces
-    return !entry.startsWith(' ')
-  })
-  .flat()
-  .reduce((prev, curr, index, array) => {
-    const wordsCount = array.length > 1 ? array.length - 1 : array.length
+// else {
+//   finalString = words.reduce((prev, curr, index, arr) => {
+//     console.log("prev", prev)
+//     console.log("curr", curr)
+//       let newstr = `${prev}${' '.repeat(spaces / wordsCount )}${curr}`;
+//       console.log("newStr", newstr)
+//       if (index + 1 === array.length) { return `${newstr}${' '.repeat(spaces % wordsCount)}` }
 
-    let newstr = `${prev}${' '.repeat(spaces / wordsCount )}${curr}`;
-    if (index + 1 === array.length) { return `${newstr}${' '.repeat(spaces % wordsCount)}` }
+//       return newstr
+//   })
+// }
 
-    return newstr
-  })
-return res;
+// console.log(finalString)
+
+// const res = resultsArr
+//   .map(line => line[0])
+//   .filter(entry => {
+//     entry.startsWith(' ') ? spaces += (entry.length) : spaces
+//     return !entry.startsWith(' ')
+//   })
+//   .flat()
+//   .reduce((prev, curr, index, array) => {
+//     const wordsCount = array.length > 1 ? array.length - 1 : array.length
+
+//     let newstr = `${prev}${' '.repeat(spaces / wordsCount )}${curr}`;
+//     if (index + 1 === array.length) { return `${newstr}${' '.repeat(spaces % wordsCount)}` }
+
+//     return newstr
+//   })
+// return res;
   // console.log(res)
 // return res;
 
